@@ -7,7 +7,7 @@ from helpers.SpeechHelper import SpeechHelper
 
 class BotController(Resource):
     questionRequest = {
-        "question": fields.String(required=True),
+        "theme": fields.String(required=True),
     }
 
     def __init__(self):
