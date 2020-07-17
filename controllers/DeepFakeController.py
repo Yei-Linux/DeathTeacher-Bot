@@ -1,6 +1,5 @@
 from flask_restful import Resource, reqparse
 import werkzeug
-
 from deepFake.deepFake import DeepFake
 
 class DeepFakeController(Resource):
