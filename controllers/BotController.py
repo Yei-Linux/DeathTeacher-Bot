@@ -16,5 +16,5 @@ class BotController(Resource):
     @use_args(questionRequest)
     def post(self,request):
         answer = chatterBotConfig.bot.get_response(request['question'])
-        self.speechHelper.speakText(answer)
+        #self.speechHelper.speakText(answer)
         return {"answer": str(answer)}
