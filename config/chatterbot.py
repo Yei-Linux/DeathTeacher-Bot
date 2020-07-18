@@ -10,7 +10,4 @@ bot = ChatBot(
     database_uri='mongodb+srv://123:123@cluster0-j3ras.mongodb.net/deathteacherbot?retryWrites=true&w=majority'
 )
 
-def trainningBot(bot):
-    trainer = ChatterBotCorpusTrainer(bot)
-    trainer.train("chatterbot.corpus.english")
 

@@ -10,8 +10,13 @@ import html2text
 from requests.exceptions import HTTPError
 import collections
 import sys
-
+from datetime import datetime, tzinfo, timedelta
 #theme = "ajedrez"
+class simple_utc(tzinfo):
+    def tzname(self,**kwargs):
+        return "UTC"
+    def utcoffset(self, dt):
+        return timedelta(0)
 class foodHelper:
     def getIndex(self,theme):
         wikipedia.set_lang("es")
@@ -35,24 +40,52 @@ class foodHelper:
         index_theme = index_theme.split("\n")
         index_theme = [x for x in index_theme if "." not in x]
         index_theme = [x for x in index_theme if "Índice" not in x]
-        index_theme = [x for x in index_theme if x != "Notas"]
-        index_theme = [x for x in index_theme if x != "Referencias"]
-        index_theme = [x for x in index_theme if x != "Véase también"]
-        index_theme = [x for x in index_theme if x != "Enlaces externos"]
-        
+        index_theme = [x for x in index_theme if x != ""]
+        index_theme = [x for x in index_theme if x != " "]
+        index_theme = [x for x in index_theme if "Notas" not in x]
+        index_theme = [x for x in index_theme if "Referencias" not in x]
+        index_theme = [x for x in index_theme if "Véase también" not in x]
+        index_theme = [x for x in index_theme if "Enlaces externos" not in x]
+        index_theme = [x for x in index_theme if "Bibliografía" not in x]
         index_theme.insert(0,title)
         
         return index_theme
         
+    def getContent(self,theme):
+        wikipedia.set_lang("es")
+        page = wikipedia.page(title=theme, auto_suggest=True)
+        url = page.url
+        #categories = page.categories
+        content = page.content
+        #links = page.links
+        references = page.references
+        themes = re.findall(r'==(.*?)== ', content, re.DOTALL)
+        #themes_n = []
+        #for i in range(0, len(themes)):
+        #   if themes[i].find("=") != 0:
+        #       themes_n.append(str(i)+themes[i])
+        #   else:
+        #       themes_n.append(themes[i].replace("=",str(i-1) +"."+ str(i-(i-1))))
 
-    def getContentTheme(index_theme):
+        #themes_n = "\n".join(themes_n)
+        content = re.sub(r"\[\d+\]", "",content)
+        #content = re.sub(r"\=\=?", "", content)
+        title = page.title
+        content = "== "+title+" =="+content
+        return content   
+
+
+    def getContentTheme(self,index_theme):
         index_theme = foodHelper().getIndex(index_theme)
         theme_dict = {}
 
         for theme in index_theme:
+           
+            content = foodHelper().getContent(index_theme[0])
             
-            content = getInfo().getContent("ajedrez")
             theme_content = re.search("(?<="+theme+" ==)([^==]+)", content)
+            
+            
             #theme_dict[theme]["content"] = theme_content
             theme_content_clear = theme_content.group(0).replace("\n","")
 
@@ -60,22 +93,24 @@ class foodHelper:
             if theme_content_clear is not "":
                 theme_dict[theme] = theme_content_clear
             
+
+
+        
         return(theme_dict)
 
-
-    def food(theme):
+    def getFood(self,theme):
 
 
         # get the API KEY here: https://developers.google.com/custom-search/v1/overview
-        #API_KEY_OPTION2 = "AIzaSyCSrZaUpabnmnyTDJyiod55crferj3uF_0"
-        API_KEY = "AIzaSyDUhIRiVvM4ihyb3Lvr_WeWfbODudgT8BU"
+        API_KEY = "AIzaSyCSrZaUpabnmnyTDJyiod55crferj3uF_0"
+        #API_KEY = "AIzaSyDUhIRiVvM4ihyb3Lvr_WeWfbODudgT8BU"
 
         # get your Search Engine ID on your CSE control panel
-        #SEARCH_ENGINE_ID__OPTION2 = "018122160717511887441:kh7l2lp_nce"
-        SEARCH_ENGINE_ID = "018122160717511887441:vrpvcfj443i"
+        SEARCH_ENGINE_ID = "018122160717511887441:kh7l2lp_nce"
+        #SEARCH_ENGINE_ID = "018122160717511887441:vrpvcfj443i"
 
         # the search query you want
-        index_list = getInfo().getFood(theme)
+        index_list = foodHelper().getIndex(theme)
 
         list_food = []
         d = collections.defaultdict(dict)
@@ -142,14 +177,16 @@ class foodHelper:
                 list_food.append(asnwer)
 
                 
-
-                d[str(j)]['text'] =  asnwer
-                d[str(j)]['search_text'] = ''
-                d[str(j)]['conversation'] = 'training'
-                d[str(j)]['persona'] = ''
-                d[str(j)]['in_response_to'] = query
-                d[str(j)]['search_in_response_to'] = query
-                d[str(j)]['tags'] = query
+                d[str(j)]["id"] = ""
+                d[str(j)]["text"] =  asnwer
+                d[str(j)]["search_text"] = ""
+                d[str(j)]["conversation"] = "training"
+                d[str(j)]["persona"] = ""
+                
+                d[str(j)]["in_response_to"] = query
+                d[str(j)]["search_in_response_to"] = query
+                d[str(j)]["created_at"] = datetime.utcnow().replace(tzinfo=simple_utc()).isoformat()
+                d[str(j)]["tags"] = [query]                
                 j = j + 1
                 dict_food = dict(d)
                 
