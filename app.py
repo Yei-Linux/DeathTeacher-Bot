@@ -7,6 +7,7 @@ from controllers.DeepFakeController import DeepFakeController
 from controllers.UserController import UserController
 
 from controllers.FoodController import FoodController
+from controllers.WiqipediaController import WiqipediaController
 import config.chatterbot as chatterBotConfig
 
 app = Flask(__name__)
@@ -16,6 +17,7 @@ api.add_resource(BotController,'/death-teachers/bot')
 api.add_resource(DeepFakeController,'/death-teachers/deep-fake')
 api.add_resource(UserController,'/death-teachers/users')
 api.add_resource(FoodController, '/death-teachers/food')
+api.add_resource(WiqipediaController, '/death-teachers/wiqipedia')
 CORS(app)
 
 if __name__ == "__main__":

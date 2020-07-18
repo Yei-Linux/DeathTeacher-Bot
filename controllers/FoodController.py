@@ -21,49 +21,21 @@ class simple_utc(tzinfo):
         return timedelta(0)
 class FoodController(Resource):
 
-
+    classRequest = {
+        "topic": fields.String(required=True)
+    }
+    
+    @use_args(classRequest)
     def post(self, request):
-        list_food = foodHelper().getFood(request)
+        list_food = foodHelper().getFood(request['topic'])
         for i in range(0, len(list_food)):
         	print(list_food[str(i)])
         	FoodService.insertFood(list_food[str(i)])
         return {"message":"food inserted correctly"}
 
     
-    def postWiki(self, request):
-    	#react
-        
-        theme_dict= foodHelper().getContentTheme(request)
-        
-        food_dict = collections.defaultdict(dict)
-        
+  
 
-        i=0
-        for key in theme_dict:
-            
-            food_dict[str(i)]["id"] = ""
-            food_dict[str(i)]["text"] = "que es" + key +"?"
-            food_dict[str(i)]["search_text"] = ""
-            food_dict[str(i)]["conversation"] =  "training"
-            food_dict[str(i)]["persona"] =  ""
-            
-            food_dict[str(i)]["in_response_to"] = theme_dict[key]
-            food_dict[str(i)]["search_in_response_to"] =  theme_dict[key]
-            food_dict[str(i)]["created_at"] = datetime.utcnow().replace(tzinfo=simple_utc()).isoformat()
-            food_dict[str(i)]["tags"] = [theme_dict[key]]
-            i = i+1
-        
-        i=0
-        for i in range(0, len(theme_dict)):
-            
-            FoodService.insertFood(food_dict[str(i)])
-        return {"message":"lesson inserted correctly"}
-
-
-a = FoodController()
-
-b = a.post("musica")
-print(b)
 
 
 
