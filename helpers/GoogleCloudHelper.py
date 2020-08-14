@@ -16,3 +16,6 @@ class GoogleCloudHelper:
         blob.upload_from_file(file_stream,content_type='video/mp4')
 
         return 'Uploaded correctly'
+
+    def getSignedUrlOfFile(self,nameFile):
+        return 'https://storage.googleapis.com/'+self.bucket_name+'/'+nameFile

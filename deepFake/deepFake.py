@@ -1,6 +1,6 @@
 import os
 from subprocess import Popen
-from io import BytesIO
+
 import deep_animator.cli as deepAnimatorCli
 import calendar
 import time
