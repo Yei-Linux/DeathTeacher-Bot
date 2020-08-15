@@ -49,7 +49,7 @@ class foodHelper:
         index_theme = [x for x in index_theme if "Bibliografía" not in x]
         index_theme.insert(0,title)
         
-        return index_theme
+        return index_theme, url
         
     def getContent(self,theme):
         wikipedia.set_lang("es")
@@ -76,27 +76,21 @@ class foodHelper:
 
 
     def getContentTheme(self,index_theme):
-        index_theme = foodHelper().getIndex(index_theme)
+        getIndex = foodHelper().getIndex(index_theme)
+        index_theme = getIndex[0]
+        url_theme = getIndex[1]
         theme_dict = {}
 
         for theme in index_theme:
-           
             content = foodHelper().getContent(index_theme[0])
-            
             theme_content = re.search("(?<="+theme+" ==)([^==]+)", content)
-            
-            
             #theme_dict[theme]["content"] = theme_content
             theme_content_clear = theme_content.group(0).replace("\n","")
-
             
             if theme_content_clear is not "":
                 theme_dict[theme] = theme_content_clear
-            
-
-
         
-        return(theme_dict)
+        return theme_dict, url_theme
 
     def getFood(self,theme):
 
@@ -110,7 +104,7 @@ class foodHelper:
         #SEARCH_ENGINE_ID = "018122160717511887441:vrpvcfj443i"
 
         # the search query you want
-        index_list = foodHelper().getIndex(theme)
+        index_list = foodHelper().getIndex(theme)[0]
 
         list_food = []
         d = collections.defaultdict(dict)
