@@ -38,7 +38,8 @@ class DeepFake:
     @staticmethod
     def upload_to_gcp(buffer_file,file_name):
         gcp = GoogleCloudHelper()
-        response = gcp.upload_blob(buffer_file,file_name)
+        gcp.upload_blob(buffer_file,file_name)
+        response = gcp.getSignedUrlOfFile(file_name)
         return response
 
     @staticmethod
