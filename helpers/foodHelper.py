@@ -183,12 +183,6 @@ class foodHelper:
                 d[str(j)]["tags"] = [query]                
                 j = j + 1
                 dict_food = dict(d)
-                
-                
-            
-
-        with open(list_food[0]+".txt", "w") as output:
-            output.write(str(dict_food))
 
         return dict_food
 

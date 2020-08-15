@@ -24,5 +24,5 @@ CORS(app)
 
 if __name__ == "__main__":
     bot = chatterBotConfig.bot
-    chatterBotConfig.trainningBot(bot)
+    #chatterBotConfig.trainningBot(bot)
     app.run(debug=True)

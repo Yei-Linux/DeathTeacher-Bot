@@ -10,6 +10,4 @@ class Theme(Model):
         url=StringField(required=False),
         content=StringField(required=False)
     ))
-#statements.createIndex(Indexes.ascending("text"), indexOptions);
-    #__indexes__ = [IndexModel("text", unique=False)]
 

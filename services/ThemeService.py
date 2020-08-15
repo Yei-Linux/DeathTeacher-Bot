@@ -11,9 +11,7 @@ class ThemeService():
 
 	@staticmethod
 	def verifyTheme(theme):
-		#print(theme)
 		themeFound = Theme.find_one({'url': theme})
-		#print("Found:",themeFound)
 		if themeFound != None:
 			return True
 		return False

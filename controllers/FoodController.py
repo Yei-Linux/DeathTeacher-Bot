@@ -10,8 +10,6 @@ import collections
 from webargs.flaskparser import use_args
 from webargs import fields
 from helpers.foodHelper import foodHelper
-
-
 from flask import Flask, request
 
 class simple_utc(tzinfo):

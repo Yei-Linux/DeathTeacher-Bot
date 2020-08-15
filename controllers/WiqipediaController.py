@@ -55,13 +55,13 @@ class WiqipediaController(Resource):
             i=0
             for key in theme_dict:
                 food_dict[str(i)]["id"] = ""
-                food_dict[str(i)]["text"] = "que es" + key +"?"
+                food_dict[str(i)]["text"] = theme_dict[key]
                 food_dict[str(i)]["search_text"] = ""
                 food_dict[str(i)]["conversation"] =  "training"
                 food_dict[str(i)]["persona"] =  ""
                 
-                food_dict[str(i)]["in_response_to"] = theme_dict[key]
-                food_dict[str(i)]["search_in_response_to"] =  theme_dict[key]
+                food_dict[str(i)]["in_response_to"] = "que es" + key +"?"
+                food_dict[str(i)]["search_in_response_to"] = "que es" + key +"?"
                 food_dict[str(i)]["created_at"] = datetime.utcnow().replace(tzinfo=simple_utc()).isoformat()
                 food_dict[str(i)]["tags"] = [theme_dict[key]]
                 i = i+1
