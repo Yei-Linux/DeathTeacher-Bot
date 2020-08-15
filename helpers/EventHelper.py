@@ -1,10 +1,11 @@
-from _datetime import datetime, timedelta
+from datetime import datetime, timedelta
 
 
 class EventHelper:
     @staticmethod
     def generateReleaseDate():
-        return str(datetime.now().strftime("%Y-%m-%d-%H:%M:%S"))
+        releaseDate = datetime.now() + timedelta(7)
+        return str(releaseDate.strftime("%Y-%m-%dT%H:%M:%S"))
 
     @staticmethod
     def generateUrlEvent(id):

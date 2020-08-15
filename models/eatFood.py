@@ -17,6 +17,4 @@ class statements(Model):
         created_at=DateTimeField(required=False),
         tags=ListField(required=False)
     ))
-#statements.createIndex(Indexes.ascending("text"), indexOptions);
-    #__indexes__ = [IndexModel("text", unique=False)]
 

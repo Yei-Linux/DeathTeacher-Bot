@@ -11,7 +11,10 @@ class Events(Model):
         description=StringField(required=True),
         urlImage=StringField(required=False),
         urlVideo=StringField(required=False),
+        urlEvent=StringField(required=False),
         category=ObjectIDField(required=True),
         professor=ObjectIDField(required=True),
-        releaseDate=StringField(required=True)
+        releaseDate=StringField(required=True),
+        createdAt=StringField(required=True),
+        deletedAt=StringField(required=False),
     ))

@@ -2,6 +2,7 @@ from flask import request
 from flask_restful import Resource, reqparse
 import werkzeug
 from io import BytesIO
+from datetime import datetime
 
 from helpers.EventHelper import EventHelper
 from helpers.GoogleCloudHelper import GoogleCloudHelper
@@ -23,7 +24,9 @@ class EventController(Resource):
                 urlEvent=data['urlEvent'],
                 professor=data['professor'],
                 releaseDate=data['urlVideo'],
-                category=data['category']
+                category=data['category'],
+                createdAt=datetime.now().strftime("%Y-%m-%dT%H:%M:%S"),
+                deletedAt=None
             )
 
             videoBytes = args['video'].read()
